@@ -1,0 +1,108 @@
+<div class="container">
+  <h2 class="header">Data Center Assets</h2>
+  
+  <div class="table-container">
+    <!-- Wrapper for sticky header -->
+    <div class="asset-table-wrapper">
+      <table class="asset-table">
+        <thead>
+          <tr>
+            <th>SL</th> 
+            <th>Location</th>
+            <th>Model</th>
+            <th>AMC Status</th>
+            <th>Warranty Expired</th>
+            <th>Application Name</th>
+            <th>OS with Bit</th>
+            <th>CPU (Core)</th>
+            <th>RAM</th>
+            <th>HDD</th>
+            <th>OS Version</th>
+            <th>Vendor Remarks</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asset of assets; let i = index">
+            <td>{{i + 1}}</td>  
+            <td>{{ asset.location }}</td>
+            <td>{{ asset.model }}</td>
+            <td>{{ asset.amc_status }}</td>
+            <td>{{ asset.warranty_expired | date }}</td>
+            <td>{{ asset.application_name }}</td>
+            <td>{{ asset.os_with_bit }}</td>
+            <td>{{ asset.cpu_core }}</td>
+            <td>{{ asset.ram }}</td>
+            <td>{{ asset.hdd }}</td>
+            <td>{{ asset.os_version }}</td>
+            <td>{{ asset.vendor_remarks }}</td>
+            <td>
+              <button (click)="openModal(asset)" class="update-button" [disabled]="userType == 'fad'"
+              [ngClass]="{ 'btn-disabled': userType == 'fad' }">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Update Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+      <h2 class="text-2xl font-semibold text-center mb-6">Update Asset</h2>
+      <form [formGroup]="updateAssetForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          <div>
+            <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+            <input id="location" formControlName="location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="model" class="block text-sm font-medium text-gray-700">Model</label>
+            <input id="model" formControlName="model" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="amc_status" class="block text-sm font-medium text-gray-700">AMC Status</label>
+            <input id="amc_status" formControlName="amc_status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="warranty_expired" class="block text-sm font-medium text-gray-700">Warranty Expired</label>
+            <input id="warranty_expired" formControlName="warranty_expired" type="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="application_name" class="block text-sm font-medium text-gray-700">Application Name</label>
+            <input id="application_name" formControlName="application_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="os_with_bit" class="block text-sm font-medium text-gray-700">OS with Bit</label>
+            <input id="os_with_bit" formControlName="os_with_bit" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="cpu_core" class="block text-sm font-medium text-gray-700">CPU Core</label>
+            <input id="cpu_core" formControlName="cpu_core" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="ram" class="block text-sm font-medium text-gray-700">RAM</label>
+            <input id="ram" formControlName="ram" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="hdd" class="block text-sm font-medium text-gray-700">HDD</label>
+            <input id="hdd" formControlName="hdd" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="os_version" class="block text-sm font-medium text-gray-700">OS Version</label>
+            <input id="os_version" formControlName="os_version" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+          <div>
+            <label for="vendor_remarks" class="block text-sm font-medium text-gray-700">Vendor Remarks</label>
+            <input id="vendor_remarks" formControlName="vendor_remarks" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" />
+          </div>
+        </div>
+        <div class="mt-6 flex justify-between">
+          <button type="submit" [disabled]="updateAssetForm.invalid" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200">Save</button>
+          <button type="button" (click)="closeModal()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-200">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>

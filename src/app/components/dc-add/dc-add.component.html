@@ -1,0 +1,129 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-semibold mb-4">Add New Asset</h2>
+    
+    <form [formGroup]="createAssetForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <!-- Location Field -->
+        <div>
+          <label class="block text-gray-700">Location</label>
+        
+          <select id="location" formControlName="location" class="border border-gray-300 p-2 w-full rounded">
+            <option value="RACK-1">RACK-1</option>
+            <option value="RACK-2">RACK-2</option>
+            <option value="RACK-3">RACK-3</option>
+            <option value="RACK-4">RACK-4</option>
+            </select>
+          <div *ngIf="createAssetForm.controls['location'].invalid && createAssetForm.controls['location'].touched" class="text-red-500">Location is required</div>
+        </div>
+  
+        <!-- Model Field -->
+        <div>
+          <label class="block text-gray-700">Model</label>
+      
+          <select id="model" formControlName="model" class="border border-gray-300 p-2 w-full rounded">
+            <option value="DPER-420">DPER-420</option>
+            <option value="DPER-720">DPER-720</option>
+            <option value="DPER-730">DPER-730</option>
+            <option value="DPER-750">DPER-750</option>
+            <option value="DPER-420">DPER-420</option>
+            <option value="DELL-730">DELL-730</option>
+            <option value="DELL-740">DELL-740</option>
+            <option value="DELL-750">DELL-750</option>
+     
+
+            <option value="HP">HP</option>
+            </select>
+          <div *ngIf="createAssetForm.controls['model'].invalid && createAssetForm.controls['model'].touched" class="text-red-500">Model is required</div>
+        </div>
+  
+        <!-- AMC Status Field -->
+        <div>
+          <label class="block text-gray-700">AMC Status</label>
+         
+          <select id="amc_status" formControlName="amc_status" class="border border-gray-300 p-2 w-full rounded">
+            <option value="Active">Active</option>
+            <option value="Expired">Expired</option>
+
+            </select>
+          <div *ngIf="createAssetForm.controls['amc_status'].invalid && createAssetForm.controls['amc_status'].touched" class="text-red-500">AMC Status is required</div>
+        </div>
+  
+        <!-- Warranty Expired Field -->
+        <div>
+          <label class="block text-gray-700">Warranty Expired</label>
+          <input formControlName="warranty_expired" class="border border-gray-300 p-2 w-full rounded" type="date" />
+          <div *ngIf="createAssetForm.controls['warranty_expired'].invalid && createAssetForm.controls['warranty_expired'].touched" class="text-red-500">Warranty Expired is required</div>
+        </div>
+  
+        <!-- Application Name Field -->
+        <div>
+          <label class="block text-gray-700">Application Name</label>
+          <input formControlName="application_name" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['application_name'].invalid && createAssetForm.controls['application_name'].touched" class="text-red-500">Application Name is required</div>
+        </div>
+  
+        <!-- OS with Bit Field -->
+        <div>
+          <label class="block text-gray-700">OS with Bit</label>
+        
+          <select id="os_with_bit" formControlName="os_with_bit" class="border border-gray-300 p-2 w-full rounded">
+            
+            <option value="Windows Server 2019">Windows Server 2019</option>
+            <option value="Windows Server 2016">Windows Server 2016</option>
+            <option value="Windows Server 2012 R2">Windows Server 2012 R2</option>
+            <option value="Windows 10 PRO">Windows 10 PRO</option>
+            <option value="Oracle Linux 8">Oracle Linux 8</option>
+            <option value="REDHAT">REDHAT</option>
+            <option value="REDHAT 8.8">REDHAT 8.8</option>
+            <option value="ESXI">ESXI</option>
+
+            </select>
+          <div *ngIf="createAssetForm.controls['os_with_bit'].invalid && createAssetForm.controls['os_with_bit'].touched" class="text-red-500">OS with Bit is required</div>
+        </div>
+  
+        <!-- CPU (Core) Field -->
+        <div>
+          <label class="block text-gray-700">CPU (Core)</label>
+          <input formControlName="cpu_core" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['cpu_core'].invalid && createAssetForm.controls['cpu_core'].touched" class="text-red-500">CPU (Core) is required</div>
+        </div>
+  
+        <!-- RAM Field -->
+        <div>
+          <label class="block text-gray-700">RAM</label>
+          <input formControlName="ram" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['ram'].invalid && createAssetForm.controls['ram'].touched" class="text-red-500">RAM is required</div>
+        </div>
+  
+        <!-- HDD Field -->
+        <div>
+          <label class="block text-gray-700">HDD</label>
+          <input formControlName="hdd" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['hdd'].invalid && createAssetForm.controls['hdd'].touched" class="text-red-500">HDD is required</div>
+        </div>
+  
+        <!-- HP Sl Field -->
+
+  
+        <!-- OS Version Field -->
+        <div>
+          <label class="block text-gray-700">OS Version</label>
+          <input formControlName="os_version" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['os_version'].invalid && createAssetForm.controls['os_version'].touched" class="text-red-500">OS Version is required</div>
+        </div>
+  
+        <!-- Vendor Remarks Field -->
+        <div>
+          <label class="block text-gray-700">Vendor Remarks</label>
+          <input formControlName="vendor_remarks" class="border border-gray-300 p-2 w-full rounded" type="text" />
+          <div *ngIf="createAssetForm.controls['vendor_remarks'].invalid && createAssetForm.controls['vendor_remarks'].touched" class="text-red-500">Vendor Remarks is required</div>
+        </div>
+      </div>
+  
+      <div class="mt-4 flex justify-between">
+        <button type="submit" [disabled]="createAssetForm.invalid" [disabled]="userType == 'fad'"
+        [ngClass]="{ 'btn-disabled': userType == 'fad' }"  class="bg-green-500 text-white px-4 py-2 rounded">Create Asset</button>
+      </div>
+    </form>
+  </div>
+  

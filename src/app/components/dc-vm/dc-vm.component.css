@@ -1,0 +1,73 @@
+.container {
+    width: 100%;
+    margin: 5px auto;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Text color for header */
+}
+
+.table-container {
+    max-height: 550px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .table-vm {
+    width: 100%;
+    border-collapse: collapse; /* Merge table cell borders */
+  }
+  
+  .table-vm th, .table-vm td {
+    padding: 1px 3px;
+    border: 1px solid #ddd; /* Light gray border for all cells */
+    text-align: center;
+    font-size: 11px;
+  }
+  
+  .table-vm th {
+    background-color: #dbf1d1; /* Header background color */
+    color: rgb(1, 65, 1); /* Header text color */
+  }
+  
+  .table-vm tr:nth-child(even) {
+    background-color: #f2f2f2; /* Lighter background for even rows */
+  }
+  
+  .table-vm tr:hover {
+    background-color: #e0e0e0; /* Highlight color on hover */
+  }
+  
+
+.edit-btn, .delete-btn {
+    padding: 1px 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    color: white;
+}
+
+.edit-btn {
+    background-color: #f0ad4e; /* Edit button color */
+    margin-right: 5px;
+}
+
+.delete-btn {
+    background-color: #d9534f; /* Delete button color */
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.8;
+}
+
+.btn-disabled {
+  background-color: #d3d3d3; /* Light gray background */
+  color: black; /* Dark gray text */
+  cursor: not-allowed; /* Show a not-allowed cursor */
+  border: 1px solid #c0c0c0; /* Light gray border */
+
+}
+

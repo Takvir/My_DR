@@ -1,0 +1,102 @@
+<div class="container mx-auto ">
+
+
+    <h2 class="text-xl text-center  border-b-2 border-gray-300">VM List</h2>
+     <div class="flex justify-start gap-3 mb-3">
+        <button (click)="openModal()" class="mb-1 px-6 py-2 bg-green-800 text-white rounded" [disabled]="userType == 'fad'"
+        [ngClass]="{ 'btn-disabled': userType == 'fad' }">VM ADD</button>
+        <button (click)="downloadCSV()" class="mb-1 px-6 py-2 bg-blue-800 text-white rounded">Download CSV</button>
+     </div>
+
+    
+    
+
+
+
+
+    
+    <!-- Scrollable Table Container -->
+    <div class="table-container">
+        <div class="asset-table-wrapper">
+            <table class="table-vm">
+                
+                <thead class="sticky top-0">
+                  <tr>
+                    <th>Asset Location</th>
+                    <th>Asset Model</th>
+                    <th>Asset AMC Status</th>
+                    <th>Application Name</th>
+                    <th>OS Version</th>
+                    <th>CPU (CORE)</th>
+                    <th>RAM</th>
+                    <th>HDD</th>
+                    <th>VM Application Name</th>
+                    <th>VM OS Version</th>
+                    <th>VM HDD</th>
+                    <th>VM RAM</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vm of vms; let i = index" [ngStyle]="getRowStyle(vm.asset_application_name, i)">
+                    <td>{{ vm.asset_location }}</td>
+                    <td>{{ vm.asset_model }}</td>
+                    <td>{{ vm.asset_amc_status }}</td>
+                    <td style="font-weight: bold;">{{ vm.asset_application_name }}</td>
+                    <td>{{ vm.asset_os_version }}</td>
+                    <td>{{ vm.asset_cpu_core }}</td>
+                    <td>{{ vm.asset_ram }}</td>
+                    <td>{{ vm.asset_hdd }}</td>
+                    <td>{{ vm.application_name }}</td>
+                    <td>{{ vm.os_version }}</td>
+                    <td>{{ vm.hdd }}</td>
+                    <td>{{ vm.ram }}</td>
+                    <td>
+                      <button (click)="editVM(vm)" class="edit-btn" [disabled]="userType == 'fad'"
+                      [ngClass]="{ 'btn-disabled': userType == 'fad' }">Edit</button>
+                      <button (click)="deleteVM(vm.id)" class="delete-btn" [disabled]="userType == 'fad'"
+                      [ngClass]="{ 'btn-disabled': userType == 'fad' }">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+
+    </div>
+  
+    <!-- Modal for adding/editing VM -->
+    <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white p-6 rounded-lg w-full max-w-md">
+        <h3 class="text-xl font-bold mb-4">{{ isEditMode ? 'Edit VM' : 'Add VM' }}</h3>
+        <form [formGroup]="vmForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label class="block text-gray-700">Asset ID</label>
+            <select formControlName="asset_id" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
+              <option *ngFor="let asset of assets" [value]="asset.id">{{ asset.application_name }}</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">Application Name</label>
+            <input formControlName="application_name" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">OS Version</label>
+            <input formControlName="os_version" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">HDD</label>
+            <input formControlName="hdd" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">RAM</label>
+            <input formControlName="ram" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div class="flex justify-end">
+            <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Cancel</button>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">{{ isEditMode ? 'Update' : 'Add' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

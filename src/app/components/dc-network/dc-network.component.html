@@ -1,0 +1,110 @@
+<h2 class="text-xl text-center border-b-2 border-gray-300">Network Inventory</h2>
+<div class="flex justify-start gap-3 mb-3">
+    <button (click)="openModal()" class="mb-1 px-6 py-2 bg-green-800 text-white rounded" [disabled]="userType == 'fad'"
+    [ngClass]="{ 'btn-disabled': userType == 'fad' }">ADD NETWORK</button>
+    <button (click)="downloadCSV()" class="mb-1 px-6 py-2 bg-blue-500 text-white rounded">Download CSV</button>
+    
+</div>
+
+<div class="w-1/4">
+  <input type="text" [(ngModel)]="searchTerm" (input)="filterAssets()" placeholder="Search..." class="border border-gray-300 p-2 rounded-md ">
+</div>
+
+
+<!-- Wrapper for the scrollable table -->
+<div class="overflow-x-auto">
+    <table class="w-full border-collapse border border-gray-200">
+        <thead>
+            <tr>
+              <th>Sl.No</th>
+                <th class="border border-gray-300 p-1">Rack No</th>
+                <th class="border border-gray-300 p-1">Device</th>
+                <th class="border border-gray-300 p-1">Zone</th>
+                <th class="border border-gray-300 p-1">Brand</th>
+                <th class="border border-gray-300 p-1">Model</th>
+                <th class="border border-gray-300 p-1">Serial Number</th>
+                <th class="border border-gray-300 p-1">Vendor</th>
+                <th class="border border-gray-300 p-1">Remarks</th>
+                <th class="border border-gray-300 p-1">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asset of networkAssets; let i = index">
+            <td class="border border-gray-300 p-1 text-center">{{ i+1 }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.rack_no }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.device }}</td>
+              <td class="border border-gray-300 p-1 text-center" [ngClass]="getZoneClass(asset.zone)">
+                  {{ asset.zone }}
+              </td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.brand }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.model }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.serial_number }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.vendor }}</td>
+              <td class="border border-gray-300 p-1 text-center">{{ asset.remarks }}</td>
+              <td class="border border-gray-300 p-1 text-center">
+                  <button (click)="openModal(asset)" class="text-white px-1 py-1 rounded mr-1 edit-btn" [disabled]="userType == 'fad'"
+                  [ngClass]="{ 'btn-disabled': userType == 'fad' }">Edit</button>
+                  <button (click)="deleteAsset(asset.id)" class="text-white px-1 py-1 rounded delete-btn" [disabled]="userType == 'fad'"
+                  [ngClass]="{ 'btn-disabled': userType == 'fad' }">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+      
+    </table>
+</div>
+
+<!-- Modal for adding/updating network asset -->
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-4xl relative">
+        <span (click)="closeModal()" class="absolute top-4 right-4 text-gray-500 cursor-pointer text-2xl">&times;</span>
+        <h2 class="text-2xl font-semibold mb-6 text-center">{{ isEditing ? 'Edit Network Asset' : 'Add Network Asset' }}</h2>
+        <form [formGroup]="assetForm" (ngSubmit)="onSubmit()">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                <div class="mb-4">
+                    <label for="rack_no" class="block mb-1 font-medium text-gray-700">Rack No</label>
+                    <input id="rack_no" formControlName="rack_no" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="device" class="block mb-1 font-medium text-gray-700">Device</label>
+                    <input id="device" formControlName="device" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="zone" class="block mb-1 font-medium text-gray-700">Zone</label>
+                    <input id="zone" formControlName="zone" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="brand" class="block mb-1 font-medium text-gray-700">Brand</label>
+                    <input id="brand" formControlName="brand" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="model" class="block mb-1 font-medium text-gray-700">Model</label>
+                    <input id="model" formControlName="model" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="serial_number" class="block mb-1 font-medium text-gray-700">Serial Number</label>
+                    <input id="serial_number" formControlName="serial_number" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="vendor" class="block mb-1 font-medium text-gray-700">Vendor</label>
+                    <input id="vendor" formControlName="vendor" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4 ">
+                    <label for="remarks" class="block mb-1 font-medium text-gray-700">Remarks</label>
+                    <textarea id="remarks" formControlName="remarks" class="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-4">
+                <button type="button" (click)="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                <button type="submit" [disabled]="assetForm.invalid" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
